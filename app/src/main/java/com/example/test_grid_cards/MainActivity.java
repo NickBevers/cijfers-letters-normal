@@ -63,3 +63,23 @@ public class MainActivity extends AppCompatActivity {
         }, 0, PERIOD);
     }
 }
+
+
+/* CODE FOR UPSIDE DOWN FRAGMENT
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        ConstraintLayout mView = (ConstraintLayout) inflater.inflate(R.layout.fragment_second, container, false);
+        int w = container.getWidth();
+        int h = container.getHeight();
+        mView.setRotation(180);
+        mView.setTranslationX((w - h) / 2);
+        mView.setTranslationY((h - w) / 2);
+        ViewGroup.LayoutParams lp = mView.getLayoutParams();
+        lp.height = w;
+        lp.width = h;
+        mView.requestLayout();
+        return mView;
+    }
+
+ */
