@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Number">
+
+    <TextView
+        android:id="@+id/tv_random"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="0dp"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/gridlayout"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <GridLayout
+        android:id="@+id/gridlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:alignmentMode="alignBounds"
+        android:columnCount="3"
+        android:padding="20dp"
+        android:rowCount="2"
+        android:useDefaultMargins="true"
+        app:layout_constraintTop_toBottomOf="@id/tv_random"
+        app:layout_goneMarginTop="0dp"
+        tools:layout_editor_absoluteX="1dp" />
+
+    <Button
+        android:id="@+id/btn_high_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="High"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btn_low_number"
+        app:layout_constraintTop_toBottomOf="@+id/gridlayout" />
+
+    <Button
+        android:id="@+id/btn_low_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Low"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_high_number"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gridlayout" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,21 +6,18 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
-public class LetterViewModel extends ViewModel {
-    // TODO: Implement the ViewModel
+public class Letter_viewmodel extends ViewModel {
     public MutableLiveData<ArrayList<Character>> letterArray;
+    public String randomWord = "TESTER";
 
     public MutableLiveData<ArrayList<Character>> getLetters(){
         if (letterArray == null){
             letterArray = new MutableLiveData<ArrayList<Character>>();
             letterArray.setValue(new ArrayList<Character>());
         }
-
-        //Test for arraylist (log the arraylist)
-        ArrayList<Character> temp = letterArray.getValue();
-        Log.d("TAG", "letterArray: " + temp);
         return letterArray;
     }
 
@@ -67,7 +64,7 @@ public class LetterViewModel extends ViewModel {
                 c = pickALetter();
             } while (!isConsonant(c));
             list.add(c);
-            Log.d("TAG", "pickConsonant: LISTLIST" + list.size());
+            //Log.d("TAG", "pickConsonant: LISTLIST" + list.size());
             letterArray.setValue(list);
         }
     }
