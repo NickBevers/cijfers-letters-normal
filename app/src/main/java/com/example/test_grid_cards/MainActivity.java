@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         viewModel = new ViewModelProvider(this).get(Gamestate_viewmodel.class);
 
         viewModel.getRound().observe(this, round -> {
-            if(!round.equals(0)){
+            if(round.equals(0)){
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.frag_player, letter_frag)
                         .commit();

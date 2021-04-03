@@ -97,7 +97,7 @@ public class Number extends Fragment {
                     number.postValue(number.getValue() + 1);
                 }
                 else {
-                    ronde = gameViewModel.getRound();
+                    /*ronde = gameViewModel.getRound();
                     //Log.d("TAG", "Timer: TIMEEEEEE " + ronde.getValue());
 
                     if (ronde.getValue().equals(0)){
@@ -107,7 +107,7 @@ public class Number extends Fragment {
                     else{
                         ((MainActivity) requireActivity()).setRound(0);
                         //Log.d("TAG", "ELSE" + ronde.getValue());
-                    }
+                    }*/
                     cancel();
                 }
 

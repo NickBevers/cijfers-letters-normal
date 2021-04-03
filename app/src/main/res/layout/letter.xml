@@ -7,14 +7,21 @@
     tools:context=".Letter">
 
     <TextView
+        android:id="@+id/tv_random"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/tv_random"
-        android:textSize="20sp"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/gridlayout"
         android:layout_gravity="center_horizontal"
-        android:layout_margin="0dp"/>
+        android:layout_margin="0dp"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/gridlayout"
+        app:layout_constraintTop_toBottomOf="@+id/et_word" />
+
+    <EditText
+        android:id="@+id/et_word"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <GridLayout
         android:id="@+id/gridlayout"
@@ -25,8 +32,7 @@
         android:padding="20dp"
         android:rowCount="2"
         android:useDefaultMargins="true"
-        app:layout_constraintBottom_toTopOf="@+id/btn_consonant"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/btn_consonant"/>
 
     <Button
         android:id="@+id/btn_vowel"
