@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -21,7 +20,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -36,6 +38,7 @@ public class Letter extends Fragment {
     EditText editText;
     String text;
     InputStream is;
+    Letter_viewmodel letter_viewmodel;
 
     public Letter() {
         // Required empty public constructor
@@ -47,6 +50,7 @@ public class Letter extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.letter, container, false);
         gameViewModel = new ViewModelProvider(requireActivity()).get(Gamestate_viewmodel.class);
+        letter_viewmodel = new ViewModelProvider(requireActivity()).get(Letter_viewmodel.class);
         number.setValue(0);
         editText = v.findViewById(R.id.et_word);
         return v;
@@ -57,8 +61,7 @@ public class Letter extends Fragment {
         super.onActivityCreated(savedInstanceState);
         cardGridLayout = v.findViewById(R.id.gridlayout);
         Letter_viewmodel letterViewModel = new ViewModelProvider(requireActivity()).get(Letter_viewmodel.class);
-        editText.setFocusable(true);
-        editText.setEnabled(true);
+
 
 
         v.findViewById(R.id.btn_vowel).setOnClickListener(view -> {
@@ -101,8 +104,8 @@ public class Letter extends Fragment {
                 if (System.currentTimeMillis() - startTime <= 5000) {
                     number.postValue(number.getValue() + 1);
                 } else {
-                    editText.setEnabled(false);
-                    editText.setFocusable(false);
+//                    editText.setEnabled(false);
+//                    editText.setFocusable(false);
                     text = String.valueOf(editText.getText());
                     checkText(text);
 
@@ -134,46 +137,73 @@ public class Letter extends Fragment {
     private void checkText(String userText) {
         try {
             if (userText.length() < 2) {
-                new Handler(Looper.getMainLooper()).post(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(requireContext(), "Your word is not a word", Toast.LENGTH_LONG).show();
-                    }
-                });
+                new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Your word is not a valid word", Toast.LENGTH_LONG).show());
+                Log.i("TAG", "TOOO SHORT");
             }
             else{
-                String [] wordArray = userText.split("");
-                Log.i("TAG", "LETTERS: " + Arrays.toString(wordArray));
+                char [] wordArray = userText.toCharArray();
+                ArrayList<Character> tempList = letter_viewmodel.letterArray.getValue();
 
-
+                ArrayList<Character> wordList = new ArrayList<>();
+                for (char c:wordArray){
+                    wordList.add(c);
+                }
+                wordList.retainAll(tempList);
+                Log.d("TAG", "WORDLIST: " + wordList);
+                Log.d("TAG", "WORDLIST_SIZE " + wordList.size());
 
                 switch (userText.length()){
                     case 2:
                         is = this.getResources().openRawResource(R.raw.filter2);
+                        if (wordList.size() < 2){
+                            Log.i("TAG", "WROOOOOONG 2. YOUR WORD IS INVALID");
+                            new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Your word is not a valid word", Toast.LENGTH_LONG).show());
+                        }
+                        break;
 
                     case 3:
                         is = this.getResources().openRawResource(R.raw.filter3);
+                        if (wordList.size() < 3){
+                            Log.i("TAG", "WROOOOOONG 3. YOUR WORD IS INVALID");
+                            new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Your word is not a valid word", Toast.LENGTH_LONG).show());
+                        }
+                        break;
 
                     case 4:
                         is = this.getResources().openRawResource(R.raw.filter4);
+                        if (wordList.size() < 4){
+                            Log.i("TAG", "WROOOOOONG 4. YOUR WORD IS INVALID");
+                            new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Your word is not a valid word", Toast.LENGTH_LONG).show());
+                        }
+                        break;
 
                     case 5:
                         is = this.getResources().openRawResource(R.raw.filter5);
+                        if (wordList.size() < 5){
+                            Log.i("TAG", "WROOOOOONG 5. YOUR WORD IS INVALID");
+                            new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Your word is not a valid word", Toast.LENGTH_LONG).show());
+                        }
+                        break;
 
                     case 6:
                         is = this.getResources().openRawResource(R.raw.filter6);
+                        if (wordList.size() < 6){
+                            Log.i("TAG", "WROOOOOONG 6. YOUR WORD IS INVALID");
+                            new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Your word is not a valid word", Toast.LENGTH_LONG).show());
+                        }
+                        break;
                 }
-                Log.d("TAG", "IS " + is);
                 byte[] buffer = new byte[is.available()];
                 while (is.read(buffer) != -1){
                     String jsontext = new String(buffer);
                     if (jsontext.contains(userText)){
-
                         Log.d("TAG", "SimpleText: " + userText.length());
-                        Log.i("TAG", "ANTYWOORD:  JAAAAAAAA");
+                        Log.i("TAG", "ANTWOORD:  JAAAAAAAA");
+                    }
+                    else{
+                        Log.d("TAG", "ANTWOORD: NEEEEEEEEEEEE");
                     }
                 }
-
             }
 
         } catch (Exception e) {
