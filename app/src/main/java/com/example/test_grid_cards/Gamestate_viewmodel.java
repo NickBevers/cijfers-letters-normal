@@ -1,5 +1,7 @@
 package com.example.test_grid_cards;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -30,20 +32,14 @@ public class Gamestate_viewmodel extends ViewModel{
     public Boolean compareNum(int num1, int num2){
         if (num1 > num2){
             scorePlayer1++;
+            Log.d("TAG", "compareNum: PLAYER 1 WINS");
             return true;
         }
         else{
             scorePlayer2++;
+            Log.d("TAG", "compareNum: PLAYER 2 WINS");
             return false;
         }
-    }
-
-    public void win_player1(){
-        scorePlayer1++;
-    }
-
-    public void win_player2(){
-        scorePlayer2++;
     }
 
     public void setRound(int num){

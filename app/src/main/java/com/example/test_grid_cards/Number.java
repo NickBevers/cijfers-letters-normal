@@ -19,6 +19,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import org.w3c.dom.Text;
 
+import java.util.Locale;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -68,6 +69,12 @@ public class Number extends Fragment {
         btn_Check.setVisibility(View.INVISIBLE);
 
 
+        TextView tv_player1 = v.findViewById(R.id.score_player1);
+        TextView tv_player2 = v.findViewById(R.id.score_player2);
+        tv_player1.setText(String.format(Locale.ENGLISH,"Score: %d", gameViewModel.scorePlayer1));
+        tv_player2.setText(String.format(Locale.ENGLISH,"Score: %d", gameViewModel.scorePlayer2));
+
+
         v.findViewById(R.id.btn_low_number).setOnClickListener(view -> {
             numberViewModel.pickLowNumber();
             //Log.d("TAG", "LOW");
@@ -79,7 +86,26 @@ public class Number extends Fragment {
         });
 
         btn_Check.setOnClickListener(view -> {
-            gameViewModel.compareNum(num_player1, num_player2);
+            if (editText1.getText().length() == 0){
+                gameViewModel.scorePlayer2++;
+            }
+            else if (editText2.getText().length() == 0){
+                gameViewModel.scorePlayer1++;
+            }
+            else{
+                num_player1 = Integer.parseInt(String.valueOf(editText1.getText()));
+                num_player2 = Integer.parseInt(String.valueOf(editText2.getText()));
+                gameViewModel.compareNum(num_player1, num_player2);
+            }
+
+            //switch rounds
+            ronde = gameViewModel.getRound();
+            if (ronde.getValue().equals(0)){
+                ((MainActivity) requireActivity()).setRound(1);
+            }
+            else {
+                ((MainActivity) requireActivity()).setRound(0);
+            }
         });
 
 
@@ -116,32 +142,13 @@ public class Number extends Fragment {
                     number.postValue(number.getValue() + 1);
                 }
                 else {
-                    /*ronde = gameViewModel.getRound();
-                    //Log.d("TAG", "Timer: TIMEEEEEE " + ronde.getValue());
-
-                    if (ronde.getValue().equals(0)){
-                        ((MainActivity) requireActivity()).setRound(1);
-                        //Log.d("TAG", "IF" + ronde.getValue());
-                    }
-                    else{
-                        ((MainActivity) requireActivity()).setRound(0);
-                        //Log.d("TAG", "ELSE" + ronde.getValue());
-                    }*/
-
-                    num_player1 = Integer.parseInt(String.valueOf(editText1.getText()));
-                    num_player2 = Integer.parseInt(String.valueOf(editText2.getText()));
-                    Log.d("TAG", "PLAYER1: " + num_player1);
-                    Log.d("TAG", "PLAYER2: " + num_player2);
-
                     btn_Check.getHandler().post(new Runnable() {
                         public void run() {
                             btn_Check.setVisibility(View.VISIBLE);
                         }
                     });
-
                     cancel();
                 }
-
             }
         }, 1000, PERIOD);
     }

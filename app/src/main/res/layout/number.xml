@@ -7,6 +7,38 @@
     tools:context=".Number">
 
     <TextView
+        android:id="@+id/score_player1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingStart="5dp"
+        android:gravity="start"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.5" />
+
+    <TextView
+        android:id="@+id/score_player2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingEnd="5dp"
+        android:textSize="15sp"
+        android:gravity="end"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.5" />
+
+
+    <EditText
+        android:id="@+id/et_player2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_player2"
+        app:layout_constraintWidth_percent="0.5" />
+
+    <TextView
         android:id="@+id/tv_player1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -14,8 +46,9 @@
         android:text="Player 1"
         android:textAlignment="center"
         android:textSize="20sp"
+        android:layout_marginTop="50dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/score_player1"
         app:layout_constraintWidth_percent="0.5" />
 
     <TextView
@@ -26,8 +59,9 @@
         android:text="Player 2"
         android:textAlignment="center"
         android:textSize="20sp"
+        android:layout_marginTop="50dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/score_player2"
         app:layout_constraintWidth_percent="0.5" />
 
     <EditText
@@ -39,22 +73,13 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_player1"
         app:layout_constraintWidth_percent="0.5" />
 
-    <EditText
-        android:id="@+id/et_player2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_player2"
-        app:layout_constraintWidth_percent="0.5" />
-
-
     <Button
         android:id="@+id/check_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Check"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_player1" />
 
