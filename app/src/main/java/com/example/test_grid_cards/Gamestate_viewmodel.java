@@ -29,16 +29,14 @@ public class Gamestate_viewmodel extends ViewModel{
         return game;
     }
 
-    public Boolean compareNum(int num1, int num2){
+    public void compareNum(int num1, int num2){
         if (num1 > num2){
             scorePlayer1++;
             Log.d("TAG", "compareNum: PLAYER 1 WINS");
-            return true;
         }
         else{
             scorePlayer2++;
             Log.d("TAG", "compareNum: PLAYER 2 WINS");
-            return false;
         }
     }
 
