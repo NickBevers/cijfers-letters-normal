@@ -5,6 +5,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -21,16 +23,25 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import be.bluebanana.zakisolver.NumberSolver;
+import be.bluebanana.zakisolver.Solver;
+
 public class Number extends Fragment {
 
     public GridLayout cardGridLayout;
     View v;
     Gamestate_viewmodel gameViewModel;
     Number_viewmodel numberViewModel;
+    Button btn_Check;
+    int num_player1;
+    int num_player2;
+    EditText editText1;
+    EditText editText2;
     Timer t = new Timer();
     private static final int PERIOD = 1000;
     public MutableLiveData<Integer> number = new MutableLiveData<Integer>();
     MutableLiveData<Integer> ronde;
+    Solver solver = new NumberSolver();
 
     public Number() {
         // Required empty public constructor
@@ -51,6 +62,10 @@ public class Number extends Fragment {
         cardGridLayout = v.findViewById(R.id.gridlayout);
         gameViewModel = new ViewModelProvider(requireActivity()).get(Gamestate_viewmodel.class);
         numberViewModel = new ViewModelProvider(requireActivity()).get(Number_viewmodel.class);
+        editText1 = v.findViewById(R.id.et_player1);
+        editText2 = v.findViewById(R.id.et_player2);
+        btn_Check = v.findViewById(R.id.check_button);
+        btn_Check.setVisibility(View.INVISIBLE);
 
 
         v.findViewById(R.id.btn_low_number).setOnClickListener(view -> {
@@ -61,6 +76,10 @@ public class Number extends Fragment {
         v.findViewById(R.id.btn_high_number).setOnClickListener(view -> {
             //Log.d("TAG", "HIGH");
             numberViewModel.pickHighNumber();
+        });
+
+        btn_Check.setOnClickListener(view -> {
+            numberViewModel.compare(num_player1, num_player2);
         });
 
 
@@ -78,7 +97,7 @@ public class Number extends Fragment {
                 TextView tv = v.findViewById(R.id.tv_random);
                 /*int randomNum = numberViewModel.pickRandom().getValue();*/
                 int randomNum = numberViewModel.randomNum;
-                tv.setText(String.valueOf(randomNum));
+                tv.setText("Number to reach: " + randomNum);
                 startTimer(requireView());
             }
         });
@@ -108,6 +127,18 @@ public class Number extends Fragment {
                         ((MainActivity) requireActivity()).setRound(0);
                         //Log.d("TAG", "ELSE" + ronde.getValue());
                     }*/
+
+                    num_player1 = Integer.parseInt(String.valueOf(editText1.getText()));
+                    num_player2 = Integer.parseInt(String.valueOf(editText2.getText()));
+                    Log.d("TAG", "PLAYER1: " + num_player1);
+                    Log.d("TAG", "PLAYER2: " + num_player2);
+
+                    btn_Check.getHandler().post(new Runnable() {
+                        public void run() {
+                            btn_Check.setVisibility(View.VISIBLE);
+                        }
+                    });
+
                     cancel();
                 }
 

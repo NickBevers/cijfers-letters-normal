@@ -62,6 +62,10 @@ public class Number_viewmodel extends ViewModel{
         }
     }
 
+    public void compare(int num1, int num2){
+
+    }
+
 
     public void clearNumber(){
         ArrayList<Integer> list = getNumbers().getValue();
