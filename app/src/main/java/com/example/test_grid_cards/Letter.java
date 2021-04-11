@@ -21,9 +21,6 @@ import android.widget.Toast;
 
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -35,8 +32,8 @@ public class Letter extends Fragment {
     private static final int PERIOD = 1000;
     public MutableLiveData<Integer> number = new MutableLiveData<Integer>();
     MutableLiveData<Integer> ronde;
-    EditText editText;
-    String text;
+    EditText editText1;
+    EditText editText2;
     InputStream is;
     Letter_viewmodel letter_viewmodel;
 
@@ -52,7 +49,8 @@ public class Letter extends Fragment {
         gameViewModel = new ViewModelProvider(requireActivity()).get(Gamestate_viewmodel.class);
         letter_viewmodel = new ViewModelProvider(requireActivity()).get(Letter_viewmodel.class);
         number.setValue(0);
-        editText = v.findViewById(R.id.et_word);
+        editText1 = v.findViewById(R.id.et_player1);
+        editText2 = v.findViewById(R.id.et_player2);
         return v;
     }
 
@@ -83,10 +81,6 @@ public class Letter extends Fragment {
             }
 
             if (letterArray.size() == 6){
-                TextView tv = v.findViewById(R.id.tv_random);
-                /*int randomNum = numberViewModel.pickRandom().getValue();*/
-                String randomWord = letterViewModel.randomWord;
-                tv.setText(randomWord);
                 startTimer(requireView());
             }
         });
@@ -106,11 +100,13 @@ public class Letter extends Fragment {
                 } else {
 //                    editText.setEnabled(false);
 //                    editText.setFocusable(false);
-                    text = String.valueOf(editText.getText());
-                    checkText(text);
+                    String text1 = String.valueOf(editText1.getText());
+                    String text2 = String.valueOf(editText2.getText());
+                    checkText(text1);
+                    checkText(text2);
 
                     /*ronde = gameViewModel.getRound();
-                    //Log.d("TAG", "Timer: TIMEEEEEE " + ronde.getValue());
+                    Log.d("TAG", "Timer: TIMEEEEEE " + ronde.getValue());
                     if (ronde.getValue().equals(0)){
                         ((MainActivity) requireActivity()).setRound(1);
                         //Log.d("TAG", "IF" + ronde.getValue());
@@ -148,6 +144,7 @@ public class Letter extends Fragment {
                 for (char c:wordArray){
                     wordList.add(c);
                 }
+                assert tempList != null;
                 wordList.retainAll(tempList);
                 Log.d("TAG", "WORDLIST: " + wordList);
                 Log.d("TAG", "WORDLIST_SIZE " + wordList.size());
