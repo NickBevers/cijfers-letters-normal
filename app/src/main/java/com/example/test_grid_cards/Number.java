@@ -79,7 +79,7 @@ public class Number extends Fragment {
         });
 
         btn_Check.setOnClickListener(view -> {
-            numberViewModel.compare(num_player1, num_player2);
+            gameViewModel.compareNum(num_player1, num_player2);
         });
 
 

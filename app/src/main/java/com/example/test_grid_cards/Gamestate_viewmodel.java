@@ -27,6 +27,17 @@ public class Gamestate_viewmodel extends ViewModel{
         return game;
     }
 
+    public Boolean compareNum(int num1, int num2){
+        if (num1 > num2){
+            scorePlayer1++;
+            return true;
+        }
+        else{
+            scorePlayer2++;
+            return false;
+        }
+    }
+
     public void win_player1(){
         scorePlayer1++;
     }
