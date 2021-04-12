@@ -1,5 +1,6 @@
 package com.example.test_grid_cards;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -65,6 +66,7 @@ public class Number extends Fragment {
         numberViewModel = new ViewModelProvider(requireActivity()).get(Number_viewmodel.class);
         editText1 = v.findViewById(R.id.et_player1);
         editText2 = v.findViewById(R.id.et_player2);
+
         btn_Check = v.findViewById(R.id.check_button);
         btn_Check.setVisibility(View.INVISIBLE);
 
@@ -102,7 +104,20 @@ public class Number extends Fragment {
                 else{
                     new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Player 2 wins!", Toast.LENGTH_LONG).show());
                 }
-                start2ndTimer(requireView());
+            }
+
+            ronde = gameViewModel.getRound();
+            if (ronde.getValue().equals(0)){
+                Log.d("TAG", "ronde: 0");
+                ((MainActivity) requireActivity()).setRound(1);
+            }
+            else if(ronde.getValue().equals(1)){
+                Log.d("TAG", "ronde: 1");
+                ((MainActivity) requireActivity()).setRound(2);
+            }
+            else {
+                Log.d("TAG", "ronde: 2");
+                ((MainActivity) requireActivity()).setRound(0);
             }
         });
 
@@ -130,6 +145,13 @@ public class Number extends Fragment {
         number.observe(requireActivity() , pb::setProgress);
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        editText1.setText("");
+        editText2.setText("");
+    }
+
     public void startTimer(View w) {
         long startTime = System.currentTimeMillis();
         t.scheduleAtFixedRate(new TimerTask() {
@@ -148,22 +170,6 @@ public class Number extends Fragment {
                 }
             }
         }, 1000, PERIOD);
-    }
-
-    public void start2ndTimer(View m){
-        t.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                //switch rounds
-                ronde = gameViewModel.getRound();
-                if (ronde.getValue().equals(2)){
-                    ((MainActivity) requireActivity()).setRound(0);
-                }
-                else {
-                    ((MainActivity) requireActivity()).setRound(ronde.getValue() + 1);
-                }
-            }
-        }, 2000);
     }
 
     @Override

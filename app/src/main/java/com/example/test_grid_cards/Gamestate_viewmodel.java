@@ -76,8 +76,12 @@ public class Gamestate_viewmodel extends ViewModel{
         if (num == 0){
             round.postValue(0);
         }
-        else{
+        else if (num == 1){
             round.postValue(1);
+        }
+
+        else{
+            round.postValue(2);
         }
     }
 }

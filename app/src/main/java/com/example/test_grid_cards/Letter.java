@@ -101,15 +101,15 @@ public class Letter extends Fragment {
                 if (System.currentTimeMillis() - startTime <= 5000) {
                     number.postValue(number.getValue() + 1);
                 } else {
-                    editText1.setFocusable(false);
-                    editText2.setFocusable(false);
+                    //editText1.setFocusable(false);
+                    //editText2.setFocusable(false);
                     String text1 = String.valueOf(editText1.getText());
                     String text2 = String.valueOf(editText2.getText());
 
-                    boolean resultPlayter1 = checkText(text1, result1);
-                    boolean resultPlayter2 = checkText(text2, result2);
+                    boolean resultPlayer1 = checkText(text1, result1);
+                    boolean resultPlayer2 = checkText(text2, result2);
 
-                    if (resultPlayter1 && resultPlayter2){
+                    if (resultPlayer1 && resultPlayer2){
                         if (text1.length() == text2.length()){
                             new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Draw!", Toast.LENGTH_SHORT).show());
                             gameViewModel.draw();
@@ -124,17 +124,21 @@ public class Letter extends Fragment {
                             gameViewModel.winPlayer2();
                         }
                     }
-                    else if (resultPlayter1 && !resultPlayter2){
+                    else if (resultPlayer1 && !resultPlayer2){
                         new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Player 1 wins!", Toast.LENGTH_SHORT).show());
                         gameViewModel.winPlayer1();
                     }
 
-                    else if (!resultPlayter1 && resultPlayter2){
+                    else if (!resultPlayer1 && resultPlayer2){
                         new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Player 2 wins!", Toast.LENGTH_SHORT).show());
                         gameViewModel.winPlayer2();
                     }
 
-                    start2ndTimer(requireView());
+                    else{
+                        new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "No Points!", Toast.LENGTH_SHORT).show());
+                    }
+
+                    ((MainActivity) requireActivity()).setRound(0);
                     cancel();
                 }
 
@@ -147,22 +151,6 @@ public class Letter extends Fragment {
         Letter_viewmodel letterViewModel = new ViewModelProvider(requireActivity()).get(Letter_viewmodel.class);
         super.onDestroyView();
         letterViewModel.clearLetter();
-    }
-
-    public void start2ndTimer(View m){
-        t.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                //switch rounds
-                ronde = gameViewModel.getRound();
-                if (ronde.getValue().equals(2)){
-                    ((MainActivity) requireActivity()).setRound(0);
-                }
-                else {
-                    ((MainActivity) requireActivity()).setRound(ronde.getValue() + 1);
-                }
-            }
-        }, 2000);
     }
 
     private boolean checkText(String userText, boolean res) {
