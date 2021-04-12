@@ -51,14 +51,25 @@ public class Gamestate_viewmodel extends ViewModel{
 
         if (player1Difference < player2Difference){
             scorePlayer1++;
-            Log.d("TAG", "compareNum: PLAYER 1 WINS");
             return true;
         }
         else{
             scorePlayer2++;
-            Log.d("TAG", "compareNum: PLAYER 2 WINS");
             return false;
         }
+    }
+
+    public void winPlayer1(){
+        scorePlayer1++;
+    }
+
+    public void winPlayer2(){
+        scorePlayer2++;
+    }
+
+    public void draw(){
+        scorePlayer1++;
+        scorePlayer2++;
     }
 
     public void setRound(int num){

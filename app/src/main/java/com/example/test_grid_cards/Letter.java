@@ -26,11 +26,14 @@ import java.util.TimerTask;
 
 public class Letter extends Fragment {
     public GridLayout cardGridLayout;
+    private static final int PERIOD = 1000;
+    public MutableLiveData<Integer> number = new MutableLiveData<Integer>();
+    public boolean result1;
+    public boolean result2;
+
     View v;
     Gamestate_viewmodel gameViewModel;
     Timer t = new Timer();
-    private static final int PERIOD = 1000;
-    public MutableLiveData<Integer> number = new MutableLiveData<Integer>();
     MutableLiveData<Integer> ronde;
     EditText editText1;
     EditText editText2;
@@ -98,23 +101,40 @@ public class Letter extends Fragment {
                 if (System.currentTimeMillis() - startTime <= 5000) {
                     number.postValue(number.getValue() + 1);
                 } else {
-//                    editText.setEnabled(false);
-//                    editText.setFocusable(false);
+                    editText1.setFocusable(false);
+                    editText2.setFocusable(false);
                     String text1 = String.valueOf(editText1.getText());
                     String text2 = String.valueOf(editText2.getText());
-                    checkText(text1);
-                    checkText(text2);
 
-                    /*ronde = gameViewModel.getRound();
-                    Log.d("TAG", "Timer: TIMEEEEEE " + ronde.getValue());
-                    if (ronde.getValue().equals(0)){
-                        ((MainActivity) requireActivity()).setRound(1);
-                        //Log.d("TAG", "IF" + ronde.getValue());
+                    boolean resultPlayter1 = checkText(text1, result1);
+                    boolean resultPlayter2 = checkText(text2, result2);
+
+                    if (resultPlayter1 && resultPlayter2){
+                        if (text1.length() == text2.length()){
+                            new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Draw!", Toast.LENGTH_SHORT).show());
+                            gameViewModel.draw();
+                        }
+
+                        if (text1.length() > text2.length()){
+                            new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Player 1 wins!", Toast.LENGTH_SHORT).show());
+                            gameViewModel.winPlayer1();
+                        }
+                        else{
+                            new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Player 2 wins!", Toast.LENGTH_SHORT).show());
+                            gameViewModel.winPlayer2();
+                        }
                     }
-                    else{
-                        ((MainActivity) requireActivity()).setRound(0);
-                        //Log.d("TAG", "ELSE" + ronde.getValue());
-                    }*/
+                    else if (resultPlayter1 && !resultPlayter2){
+                        new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Player 1 wins!", Toast.LENGTH_SHORT).show());
+                        gameViewModel.winPlayer1();
+                    }
+
+                    else if (!resultPlayter1 && resultPlayter2){
+                        new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Player 2 wins!", Toast.LENGTH_SHORT).show());
+                        gameViewModel.winPlayer2();
+                    }
+
+                    start2ndTimer(requireView());
                     cancel();
                 }
 
@@ -129,12 +149,28 @@ public class Letter extends Fragment {
         letterViewModel.clearLetter();
     }
 
+    public void start2ndTimer(View m){
+        t.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                //switch rounds
+                ronde = gameViewModel.getRound();
+                if (ronde.getValue().equals(2)){
+                    ((MainActivity) requireActivity()).setRound(0);
+                }
+                else {
+                    ((MainActivity) requireActivity()).setRound(ronde.getValue() + 1);
+                }
+            }
+        }, 2000);
+    }
 
-    private void checkText(String userText) {
+    private boolean checkText(String userText, boolean res) {
         try {
             if (userText.length() < 2) {
-                new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Your word is not a valid word", Toast.LENGTH_LONG).show());
+                new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Your word is not a valid word", Toast.LENGTH_SHORT).show());
                 Log.i("TAG", "TOOO SHORT");
+                res = false;
             }
             else{
                 char [] wordArray = userText.toCharArray();
@@ -154,7 +190,8 @@ public class Letter extends Fragment {
                         is = this.getResources().openRawResource(R.raw.filter2);
                         if (wordList.size() < 2){
                             Log.i("TAG", "WROOOOOONG 2. YOUR WORD IS INVALID");
-                            new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Your word is not a valid word", Toast.LENGTH_LONG).show());
+                            new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Your word is not a valid word", Toast.LENGTH_SHORT).show());
+                            res = false;
                         }
                         break;
 
@@ -162,7 +199,8 @@ public class Letter extends Fragment {
                         is = this.getResources().openRawResource(R.raw.filter3);
                         if (wordList.size() < 3){
                             Log.i("TAG", "WROOOOOONG 3. YOUR WORD IS INVALID");
-                            new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Your word is not a valid word", Toast.LENGTH_LONG).show());
+                            new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Your word is not a valid word", Toast.LENGTH_SHORT).show());
+                            res = false;
                         }
                         break;
 
@@ -170,7 +208,8 @@ public class Letter extends Fragment {
                         is = this.getResources().openRawResource(R.raw.filter4);
                         if (wordList.size() < 4){
                             Log.i("TAG", "WROOOOOONG 4. YOUR WORD IS INVALID");
-                            new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Your word is not a valid word", Toast.LENGTH_LONG).show());
+                            new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Your word is not a valid word", Toast.LENGTH_SHORT).show());
+                            res = false;
                         }
                         break;
 
@@ -178,7 +217,8 @@ public class Letter extends Fragment {
                         is = this.getResources().openRawResource(R.raw.filter5);
                         if (wordList.size() < 5){
                             Log.i("TAG", "WROOOOOONG 5. YOUR WORD IS INVALID");
-                            new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Your word is not a valid word", Toast.LENGTH_LONG).show());
+                            new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Your word is not a valid word", Toast.LENGTH_SHORT).show());
+                            res = false;
                         }
                         break;
 
@@ -186,7 +226,8 @@ public class Letter extends Fragment {
                         is = this.getResources().openRawResource(R.raw.filter6);
                         if (wordList.size() < 6){
                             Log.i("TAG", "WROOOOOONG 6. YOUR WORD IS INVALID");
-                            new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Your word is not a valid word", Toast.LENGTH_LONG).show());
+                            new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Your word is not a valid word", Toast.LENGTH_SHORT).show());
+                            res = false;
                         }
                         break;
                 }
@@ -196,17 +237,19 @@ public class Letter extends Fragment {
                     if (jsontext.contains(userText)){
                         Log.d("TAG", "SimpleText: " + userText.length());
                         Log.i("TAG", "ANTWOORD:  JAAAAAAAA");
+                        res = true;
                     }
                     else{
                         Log.d("TAG", "ANTWOORD: NEEEEEEEEEEEE");
+                        res = false;
                     }
                 }
             }
 
         } catch (Exception e) {
-
             Log.e("TAG", "" + e.toString());
         }
+        return res;
     }
 
 }

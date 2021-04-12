@@ -156,11 +156,11 @@ public class Number extends Fragment {
             public void run() {
                 //switch rounds
                 ronde = gameViewModel.getRound();
-                if (ronde.getValue().equals(0)){
-                    ((MainActivity) requireActivity()).setRound(1);
+                if (ronde.getValue().equals(2)){
+                    ((MainActivity) requireActivity()).setRound(0);
                 }
                 else {
-                    ((MainActivity) requireActivity()).setRound(0);
+                    ((MainActivity) requireActivity()).setRound(ronde.getValue() + 1);
                 }
             }
         }, 2000);
