@@ -1,6 +1,8 @@
 package com.example.test_grid_cards;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,9 +27,6 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import be.bluebanana.zakisolver.NumberSolver;
-import be.bluebanana.zakisolver.Solver;
-
 public class Number extends Fragment {
 
     public GridLayout cardGridLayout;
@@ -36,13 +36,13 @@ public class Number extends Fragment {
     Button btn_Check;
     int num_player1;
     int num_player2;
+    int targetNum;
     EditText editText1;
     EditText editText2;
     Timer t = new Timer();
     private static final int PERIOD = 1000;
     public MutableLiveData<Integer> number = new MutableLiveData<Integer>();
     MutableLiveData<Integer> ronde;
-    Solver solver = new NumberSolver();
 
     public Number() {
         // Required empty public constructor
@@ -95,16 +95,14 @@ public class Number extends Fragment {
             else{
                 num_player1 = Integer.parseInt(String.valueOf(editText1.getText()));
                 num_player2 = Integer.parseInt(String.valueOf(editText2.getText()));
-                gameViewModel.compareNum(num_player1, num_player2);
-            }
-
-            //switch rounds
-            ronde = gameViewModel.getRound();
-            if (ronde.getValue().equals(0)){
-                ((MainActivity) requireActivity()).setRound(1);
-            }
-            else {
-                ((MainActivity) requireActivity()).setRound(0);
+                boolean result = gameViewModel.compareNum(num_player1, num_player2, targetNum);
+                if (result){
+                    new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Player 1 wins!", Toast.LENGTH_LONG).show());
+                }
+                else{
+                    new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Player 2 wins!", Toast.LENGTH_LONG).show());
+                }
+                start2ndTimer(requireView());
             }
         });
 
@@ -121,9 +119,8 @@ public class Number extends Fragment {
 
             if (numberArray.size() == 6){
                 TextView tv = v.findViewById(R.id.tv_random);
-                /*int randomNum = numberViewModel.pickRandom().getValue();*/
-                int randomNum = numberViewModel.randomNum;
-                tv.setText("Number to reach: " + randomNum);
+                targetNum = numberViewModel.randomNum;
+                tv.setText(String.format(Locale.ENGLISH, "Number to reach: %d", targetNum));
                 startTimer(requireView());
             }
         });
@@ -151,6 +148,22 @@ public class Number extends Fragment {
                 }
             }
         }, 1000, PERIOD);
+    }
+
+    public void start2ndTimer(View m){
+        t.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                //switch rounds
+                ronde = gameViewModel.getRound();
+                if (ronde.getValue().equals(0)){
+                    ((MainActivity) requireActivity()).setRound(1);
+                }
+                else {
+                    ((MainActivity) requireActivity()).setRound(0);
+                }
+            }
+        }, 2000);
     }
 
     @Override
