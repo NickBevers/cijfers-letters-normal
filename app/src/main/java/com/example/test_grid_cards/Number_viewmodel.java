@@ -8,8 +8,6 @@ import java.util.Random;
 
 public class Number_viewmodel extends ViewModel{
     public MutableLiveData<ArrayList<Integer>> numberArray;
-    Random random = new Random();
-    public int randomNum = random.nextInt(900)+100;
 
     public MutableLiveData<ArrayList<Integer>> getNumbers(){
         if (numberArray == null){

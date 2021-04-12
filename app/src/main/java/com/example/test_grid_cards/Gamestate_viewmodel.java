@@ -1,20 +1,15 @@
 package com.example.test_grid_cards;
 
-import android.os.Handler;
-import android.os.Looper;
-import android.util.Log;
-import android.widget.Toast;
-
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 public class Gamestate_viewmodel extends ViewModel{
     private MutableLiveData<Integer> round;
-    private MutableLiveData<Integer> game;
-    public static final Integer roundNum = 0;
-    public static final Integer gameType = 0;
+    public Integer roundNum = 0;
+    public Integer gameType = 0;
     public int scorePlayer1 = 0;
     public int scorePlayer2 = 0;
+    public int numberOfGames = 3; //Amount of games to be played +1
     public int player1Difference;
     public int player2Difference;
 
@@ -26,15 +21,8 @@ public class Gamestate_viewmodel extends ViewModel{
         return round;
     }
 
-    public MutableLiveData<Integer> getGame() {
-        if (game == null) {
-            game = new MutableLiveData<Integer> ();
-            game.postValue(gameType);
-        }
-        return game;
-    }
-
-    public boolean compareNum(int num1, int num2, int target){
+    public int compareNum(int num1, int num2, int target){
+        int res = 0;
         if (num1 > target){
             player1Difference = num1 - target;
         }
@@ -51,12 +39,20 @@ public class Gamestate_viewmodel extends ViewModel{
 
         if (player1Difference < player2Difference){
             scorePlayer1++;
-            return true;
+            res = 0;
         }
-        else{
+
+        else if (player1Difference > player2Difference){
             scorePlayer2++;
-            return false;
+            res = 1;
         }
+
+        else{
+            draw();
+            res = 2;
+        }
+
+        return res;
     }
 
     public void winPlayer1(){
@@ -73,15 +69,10 @@ public class Gamestate_viewmodel extends ViewModel{
     }
 
     public void setRound(int num){
-        if (num == 0){
-            round.postValue(0);
-        }
-        else if (num == 1){
-            round.postValue(1);
-        }
+        round.postValue(num);
+    }
 
-        else{
-            round.postValue(2);
-        }
+    public void setGame(int num){
+        gameType = num;
     }
 }

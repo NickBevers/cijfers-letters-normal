@@ -44,6 +44,8 @@ public class Number extends Fragment {
     private static final int PERIOD = 1000;
     public MutableLiveData<Integer> number = new MutableLiveData<Integer>();
     MutableLiveData<Integer> ronde;
+    Random random = new Random();
+    public int randomNum;
 
     public Number() {
         // Required empty public constructor
@@ -97,12 +99,15 @@ public class Number extends Fragment {
             else{
                 num_player1 = Integer.parseInt(String.valueOf(editText1.getText()));
                 num_player2 = Integer.parseInt(String.valueOf(editText2.getText()));
-                boolean result = gameViewModel.compareNum(num_player1, num_player2, targetNum);
-                if (result){
+                int result = gameViewModel.compareNum(num_player1, num_player2, targetNum);
+                if (result == 0){
                     new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Player 1 wins!", Toast.LENGTH_LONG).show());
                 }
-                else{
+                else if (result == 1){
                     new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Player 2 wins!", Toast.LENGTH_LONG).show());
+                }
+                else {
+                    new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Draw!", Toast.LENGTH_LONG).show());
                 }
             }
 
@@ -134,7 +139,8 @@ public class Number extends Fragment {
 
             if (numberArray.size() == 6){
                 TextView tv = v.findViewById(R.id.tv_random);
-                targetNum = numberViewModel.randomNum;
+                randomNum = random.nextInt(900)+100;
+                targetNum = randomNum;
                 tv.setText(String.format(Locale.ENGLISH, "Number to reach: %d", targetNum));
                 startTimer(requireView());
             }

@@ -8,20 +8,27 @@
 
     <TextView
         android:id="@+id/score_player1"
-        android:layout_width="5dp"
-        android:layout_height="22dp"
-        android:layout_marginTop="4dp"
-        android:gravity="center_horizontal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingStart="5dp"
+        android:paddingRight="5dp"
+        android:paddingLeft="5dp"
+        android:gravity="start"
+        android:textSize="15sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.5" />
+        app:layout_constraintWidth_percent="0.5"
+        />
 
     <TextView
         android:id="@+id/score_player2"
-        android:layout_width="5dp"
-        android:layout_height="22dp"
-        android:layout_marginTop="4dp"
-        android:gravity="center_horizontal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingEnd="5dp"
+        android:paddingRight="5dp"
+        android:paddingLeft="5dp"
+        android:textSize="15sp"
+        android:gravity="end"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent="0.5" />
@@ -34,6 +41,7 @@
         android:text="Player 2"
         android:textAlignment="center"
         android:textSize="20sp"
+        android:layout_marginTop="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/score_player2"
         app:layout_constraintWidth_percent="0.5" />
@@ -46,6 +54,7 @@
         android:text="Player 1"
         android:textAlignment="center"
         android:textSize="20sp"
+        android:layout_marginTop="50dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/score_player1"
         app:layout_constraintWidth_percent="0.5" />

@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -62,6 +63,10 @@ public class Letter extends Fragment {
         super.onActivityCreated(savedInstanceState);
         cardGridLayout = v.findViewById(R.id.gridlayout);
         Letter_viewmodel letterViewModel = new ViewModelProvider(requireActivity()).get(Letter_viewmodel.class);
+        TextView tv_player1 = v.findViewById(R.id.score_player1);
+        TextView tv_player2 = v.findViewById(R.id.score_player2);
+        tv_player1.setText(String.format(Locale.ENGLISH,"Score: %d", gameViewModel.scorePlayer1));
+        tv_player2.setText(String.format(Locale.ENGLISH,"Score: %d", gameViewModel.scorePlayer2));
 
 
 
@@ -98,6 +103,7 @@ public class Letter extends Fragment {
         t.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
+                int game = gameViewModel.gameType;
                 if (System.currentTimeMillis() - startTime <= 5000) {
                     number.postValue(number.getValue() + 1);
                 } else {
@@ -109,41 +115,60 @@ public class Letter extends Fragment {
                     boolean resultPlayer1 = checkText(text1, result1);
                     boolean resultPlayer2 = checkText(text2, result2);
 
-                    if (resultPlayer1 && resultPlayer2){
-                        if (text1.length() == text2.length()){
-                            new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Draw!", Toast.LENGTH_SHORT).show());
-                            gameViewModel.draw();
-                        }
+                    if (game != gameViewModel.numberOfGames){
+                        if (resultPlayer1 && resultPlayer2){
+                            if (text1.length() == text2.length()){
+                                new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Draw!", Toast.LENGTH_SHORT).show());
+                                gameViewModel.draw();
+                            }
 
-                        if (text1.length() > text2.length()){
+                            if (text1.length() > text2.length()){
+                                new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Player 1 wins!", Toast.LENGTH_SHORT).show());
+                                gameViewModel.winPlayer1();
+                            }
+                            else{
+                                new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Player 2 wins!", Toast.LENGTH_SHORT).show());
+                                gameViewModel.winPlayer2();
+                            }
+                        }
+                        else if (resultPlayer1 && !resultPlayer2){
                             new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Player 1 wins!", Toast.LENGTH_SHORT).show());
                             gameViewModel.winPlayer1();
                         }
-                        else{
+
+                        else if (!resultPlayer1 && resultPlayer2){
                             new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Player 2 wins!", Toast.LENGTH_SHORT).show());
                             gameViewModel.winPlayer2();
                         }
-                    }
-                    else if (resultPlayer1 && !resultPlayer2){
-                        new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Player 1 wins!", Toast.LENGTH_SHORT).show());
-                        gameViewModel.winPlayer1();
+
+                        else{
+                            new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "No Points!", Toast.LENGTH_SHORT).show());
+                        }
                     }
 
-                    else if (!resultPlayer1 && resultPlayer2){
-                        new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Player 2 wins!", Toast.LENGTH_SHORT).show());
-                        gameViewModel.winPlayer2();
+
+                    game += 1;
+                    gameViewModel.setGame(game);
+                    Log.d("TAG", "GAME: " + game);
+                    if (game < gameViewModel.numberOfGames){
+                        ((MainActivity) requireActivity()).setRound(0);
+                    }
+                    else {
+                        ((MainActivity) requireActivity()).setRound(3);
                     }
 
-                    else{
-                        new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "No Points!", Toast.LENGTH_SHORT).show());
-                    }
-
-                    ((MainActivity) requireActivity()).setRound(0);
                     cancel();
                 }
 
             }
         }, 1000, PERIOD);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        editText1.setText("");
+        editText2.setText("");
     }
 
     @Override
