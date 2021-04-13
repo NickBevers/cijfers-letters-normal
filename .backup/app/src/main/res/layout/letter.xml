@@ -34,25 +34,11 @@
         app:layout_constraintWidth_percent="0.5" />
 
     <TextView
-        android:id="@+id/tv_player1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="@string/player1_name"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        android:layout_marginTop="50dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/score_player1"
-        app:layout_constraintWidth_percent="0.5" />
-
-
-    <TextView
         android:id="@+id/tv_player2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:text="@string/player2_name"
+        android:text="Player 2"
         android:textAlignment="center"
         android:textSize="20sp"
         android:layout_marginTop="50dp"
@@ -60,30 +46,36 @@
         app:layout_constraintTop_toBottomOf="@+id/score_player2"
         app:layout_constraintWidth_percent="0.5" />
 
+    <TextView
+        android:id="@+id/tv_player1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="Player 1"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/score_player1"
+        app:layout_constraintWidth_percent="0.5" />
 
     <EditText
         android:id="@+id/et_player2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textSize="20sp"
-        android:importantForAutofill="no"
-        android:inputType="textNoSuggestions"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_player2"
-        app:layout_constraintWidth_percent="0.5"
-        tools:ignore="LabelFor" />
+        app:layout_constraintWidth_percent="0.5" />
 
     <EditText
         android:id="@+id/et_player1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textSize="20sp"
-        android:importantForAutofill="no"
-        android:inputType="textNoSuggestions"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_player1"
-        app:layout_constraintWidth_percent="0.5"
-        tools:ignore="LabelFor" />
+        app:layout_constraintWidth_percent="0.5" />
 
     <GridLayout
         android:id="@+id/gridlayout"
@@ -101,7 +93,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:text="@string/consonant"
+        android:text="consonant"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_vowel"
         app:layout_constraintHorizontal_bias="0.5"
@@ -112,7 +104,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:text="@string/vowel"
+        android:text="vowel"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

@@ -33,24 +33,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent="0.5" />
 
-
-    <EditText
-        android:id="@+id/et_player2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_player2"
-        app:layout_constraintWidth_percent="0.5"
-        android:autofillHints=" "
-        android:inputType="number" />
-
     <TextView
         android:id="@+id/tv_player1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:text="Player 1"
+        android:text="@string/player1_name"
         android:textAlignment="center"
         android:textSize="20sp"
         android:layout_marginTop="50dp"
@@ -63,7 +51,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:text="Player 2"
+        android:text="@string/player2_name"
         android:textAlignment="center"
         android:textSize="20sp"
         android:layout_marginTop="50dp"
@@ -76,17 +64,30 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textSize="20sp"
+        android:inputType="number"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_player1"
         app:layout_constraintWidth_percent="0.5"
         android:autofillHints=" "
-        android:inputType="number" />
+        tools:ignore="LabelFor" />
+
+    <EditText
+        android:id="@+id/et_player2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_player2"
+        app:layout_constraintWidth_percent="0.5"
+        android:autofillHints=" "
+        android:inputType="number"
+        tools:ignore="LabelFor" />
 
     <Button
         android:id="@+id/check_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Check"
+        android:text="@string/check"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
@@ -118,7 +119,8 @@
         android:id="@+id/btn_high_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="High"
+        android:text="@string/highNum"
+        android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -128,7 +130,8 @@
         android:id="@+id/btn_low_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Low"
+        android:text="@string/lowNum"
+        android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_high_number"
         app:layout_constraintHorizontal_bias="0.5"

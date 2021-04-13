@@ -118,31 +118,31 @@ public class Letter extends Fragment {
                     if (game != gameViewModel.numberOfGames){
                         if (resultPlayer1 && resultPlayer2){
                             if (text1.length() == text2.length()){
-                                new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), getResources().getString(R.string.draw), Toast.LENGTH_SHORT).show());
+                                new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Draw!", Toast.LENGTH_SHORT).show());
                                 gameViewModel.draw();
                             }
 
                             if (text1.length() > text2.length()){
-                                new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), getResources().getString(R.string.player1_win), Toast.LENGTH_SHORT).show());
+                                new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Player 1 wins!", Toast.LENGTH_SHORT).show());
                                 gameViewModel.winPlayer1();
                             }
                             else{
-                                new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), getResources().getString(R.string.player2_win), Toast.LENGTH_SHORT).show());
+                                new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Player 2 wins!", Toast.LENGTH_SHORT).show());
                                 gameViewModel.winPlayer2();
                             }
                         }
                         else if (resultPlayer1 && !resultPlayer2){
-                            new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), getResources().getString(R.string.player1_win), Toast.LENGTH_SHORT).show());
+                            new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Player 1 wins!", Toast.LENGTH_SHORT).show());
                             gameViewModel.winPlayer1();
                         }
 
                         else if (!resultPlayer1 && resultPlayer2){
-                            new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), getResources().getString(R.string.player2_win), Toast.LENGTH_SHORT).show());
+                            new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Player 2 wins!", Toast.LENGTH_SHORT).show());
                             gameViewModel.winPlayer2();
                         }
 
                         else{
-                            new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), getResources().getString(R.string.no_winner), Toast.LENGTH_SHORT).show());
+                            new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "No Points!", Toast.LENGTH_SHORT).show());
                         }
                     }
 
@@ -181,7 +181,7 @@ public class Letter extends Fragment {
     private boolean checkText(String userText, boolean res) {
         try {
             if (userText.length() < 2) {
-                new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(),  getResources().getString(R.string.invalid), Toast.LENGTH_SHORT).show());
+                new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Your word is not a valid word", Toast.LENGTH_SHORT).show());
                 Log.i("TAG", "TOOO SHORT");
                 res = false;
             }
@@ -202,8 +202,8 @@ public class Letter extends Fragment {
                     case 2:
                         is = this.getResources().openRawResource(R.raw.filter2);
                         if (wordList.size() < 2){
-                            //Log.i("TAG", "WROOOOOONG 2. YOUR WORD IS INVALID");
-                            new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(),  getResources().getString(R.string.invalid), Toast.LENGTH_SHORT).show());
+                            Log.i("TAG", "WROOOOOONG 2. YOUR WORD IS INVALID");
+                            new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Your word is not a valid word", Toast.LENGTH_SHORT).show());
                             res = false;
                         }
                         break;
@@ -211,8 +211,8 @@ public class Letter extends Fragment {
                     case 3:
                         is = this.getResources().openRawResource(R.raw.filter3);
                         if (wordList.size() < 3){
-                            //Log.i("TAG", "WROOOOOONG 3. YOUR WORD IS INVALID");
-                            new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(),  getResources().getString(R.string.invalid), Toast.LENGTH_SHORT).show());
+                            Log.i("TAG", "WROOOOOONG 3. YOUR WORD IS INVALID");
+                            new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Your word is not a valid word", Toast.LENGTH_SHORT).show());
                             res = false;
                         }
                         break;
@@ -220,8 +220,8 @@ public class Letter extends Fragment {
                     case 4:
                         is = this.getResources().openRawResource(R.raw.filter4);
                         if (wordList.size() < 4){
-                            //Log.i("TAG", "WROOOOOONG 4. YOUR WORD IS INVALID");
-                            new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(),  getResources().getString(R.string.invalid), Toast.LENGTH_SHORT).show());
+                            Log.i("TAG", "WROOOOOONG 4. YOUR WORD IS INVALID");
+                            new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Your word is not a valid word", Toast.LENGTH_SHORT).show());
                             res = false;
                         }
                         break;
@@ -229,8 +229,8 @@ public class Letter extends Fragment {
                     case 5:
                         is = this.getResources().openRawResource(R.raw.filter5);
                         if (wordList.size() < 5){
-                            //Log.i("TAG", "WROOOOOONG 5. YOUR WORD IS INVALID");
-                            new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(),  getResources().getString(R.string.invalid), Toast.LENGTH_SHORT).show());
+                            Log.i("TAG", "WROOOOOONG 5. YOUR WORD IS INVALID");
+                            new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Your word is not a valid word", Toast.LENGTH_SHORT).show());
                             res = false;
                         }
                         break;
@@ -238,8 +238,8 @@ public class Letter extends Fragment {
                     case 6:
                         is = this.getResources().openRawResource(R.raw.filter6);
                         if (wordList.size() < 6){
-                            //Log.i("TAG", "WROOOOOONG 6. YOUR WORD IS INVALID");
-                            new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), getResources().getString(R.string.invalid), Toast.LENGTH_SHORT).show());
+                            Log.i("TAG", "WROOOOOONG 6. YOUR WORD IS INVALID");
+                            new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Your word is not a valid word", Toast.LENGTH_SHORT).show());
                             res = false;
                         }
                         break;
@@ -247,10 +247,15 @@ public class Letter extends Fragment {
                 byte[] buffer = new byte[is.available()];
                 while (is.read(buffer) != -1){
                     String jsontext = new String(buffer);
-                    //Log.d("TAG", "SimpleText: " + userText.length());
-                    //Log.i("TAG", "ANTWOORD:  JAAAAAAAA");
-                    //Log.d("TAG", "ANTWOORD: NEEEEEEEEEEEE");
-                    res = jsontext.contains(userText);
+                    if (jsontext.contains(userText)){
+                        Log.d("TAG", "SimpleText: " + userText.length());
+                        Log.i("TAG", "ANTWOORD:  JAAAAAAAA");
+                        res = true;
+                    }
+                    else{
+                        Log.d("TAG", "ANTWOORD: NEEEEEEEEEEEE");
+                        res = false;
+                    }
                 }
             }
 
