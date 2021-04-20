@@ -9,7 +9,8 @@ public class Gamestate_viewmodel extends ViewModel{
     public Integer gameType = 0;
     public int scorePlayer1 = 0;
     public int scorePlayer2 = 0;
-    public int numberOfGames = 3; //Amount of games to be played +1
+    public int numberOfGames = 1; //Amount of games to be played +1
+    public int timerDuration = 5000; // timer duration in milliseconds
     public int player1Difference;
     public int player2Difference;
     public int player1Wins = 0;
@@ -23,7 +24,7 @@ public class Gamestate_viewmodel extends ViewModel{
         return round;
     }
 
-    public int compareNum(int num1, int num2, int target){
+    public int calculateDifference(int num1, int num2, int target){
         player1Difference = Math.abs(num1- target);
         player2Difference = Math.abs(num2- target);
 

@@ -1,6 +1,5 @@
 package com.example.test_grid_cards;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -21,15 +20,12 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 
-import org.w3c.dom.Text;
-
 import java.util.Locale;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class Number extends Fragment {
-
     public GridLayout cardGridLayout;
     View v;
     Gamestate_viewmodel gameViewModel;
@@ -46,6 +42,11 @@ public class Number extends Fragment {
     MutableLiveData<Integer> ronde;
     Random random = new Random();
     public int randomNum;
+    int firstRound = 0;
+    int secondRound = 1;
+    int thirdRound = 2;
+    int randomNumLimit = 900; //Highest possible number to be generated for Number rounds
+    int DELAY = 1000;
 
     public Number() {
         // Required empty public constructor
@@ -93,36 +94,38 @@ public class Number extends Fragment {
             if (editText1.getText().length() == 0){
                 gameViewModel.scorePlayer2++;
             }
-            else if (editText2.getText().length() == 0){
+
+            if (editText2.getText().length() == 0){
                 gameViewModel.scorePlayer1++;
             }
+
             else{
                 num_player1 = Integer.parseInt(String.valueOf(editText1.getText()));
                 num_player2 = Integer.parseInt(String.valueOf(editText2.getText()));
-                int result = gameViewModel.compareNum(num_player1, num_player2, targetNum);
+                int result = gameViewModel.calculateDifference(num_player1, num_player2, targetNum);
                 if (result == 0){
-                    new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Player 1 wins!", Toast.LENGTH_LONG).show());
+                    new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), getResources().getString(R.string.player1_win), Toast.LENGTH_LONG).show());
                 }
                 else if (result == 1){
-                    new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Player 2 wins!", Toast.LENGTH_LONG).show());
+                    new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), getResources().getString(R.string.player2_win), Toast.LENGTH_LONG).show());
                 }
                 else {
-                    new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), "Draw!", Toast.LENGTH_LONG).show());
+                    new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(requireContext(), getResources().getString(R.string.draw), Toast.LENGTH_LONG).show());
                 }
             }
 
             ronde = gameViewModel.getRound();
-            if (ronde.getValue().equals(0)){
-                Log.d("TAG", "ronde: 0");
-                ((MainActivity) requireActivity()).setRound(1);
+            if (ronde.getValue().equals(firstRound)){
+                //Log.d("TAG", "ronde: 0");
+                ((MainActivity) requireActivity()).setRound(secondRound);
             }
-            else if(ronde.getValue().equals(1)){
-                Log.d("TAG", "ronde: 1");
-                ((MainActivity) requireActivity()).setRound(2);
+            else if(ronde.getValue().equals(secondRound)){
+                //Log.d("TAG", "ronde: 1");
+                ((MainActivity) requireActivity()).setRound(thirdRound);
             }
             else {
-                Log.d("TAG", "ronde: 2");
-                ((MainActivity) requireActivity()).setRound(0);
+                //Log.d("TAG", "ronde: 2");
+                ((MainActivity) requireActivity()).setRound(firstRound);
             }
         });
 
@@ -139,7 +142,7 @@ public class Number extends Fragment {
 
             if (numberArray.size() == 6){
                 TextView tv = v.findViewById(R.id.tv_random);
-                randomNum = random.nextInt(900)+100;
+                randomNum = random.nextInt(randomNumLimit)+100;
                 targetNum = randomNum;
                 tv.setText(String.format(Locale.ENGLISH, "Number to reach: %d", targetNum));
                 startTimer(requireView());
@@ -151,19 +154,12 @@ public class Number extends Fragment {
         number.observe(requireActivity() , pb::setProgress);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        editText1.setText("");
-        editText2.setText("");
-    }
-
     public void startTimer(View w) {
         long startTime = System.currentTimeMillis();
         t.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                if (System.currentTimeMillis() - startTime <= 5000) {
+                if (System.currentTimeMillis() - startTime <= gameViewModel.timerDuration) {
                     number.postValue(number.getValue() + 1);
                 }
                 else {
@@ -175,7 +171,14 @@ public class Number extends Fragment {
                     cancel();
                 }
             }
-        }, 1000, PERIOD);
+        }, DELAY, PERIOD);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        editText1.setText("");
+        editText2.setText("");
     }
 
     @Override

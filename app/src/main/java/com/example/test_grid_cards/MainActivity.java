@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else if (round.equals(2)){
                     getSupportFragmentManager().beginTransaction()
-                            .detach(number_frag).attach(number_frag)
+                            .replace(R.id.frag_player, letter_frag)
                             .commit();
                 }
                 else{
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setRound(int num){
-        Log.d("TAG", "setRound: RONDE " + num);
+        //Log.d("TAG", "setRound: RONDE " + num);
         viewModel.setRound(num);
     }
 }

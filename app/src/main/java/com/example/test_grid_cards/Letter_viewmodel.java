@@ -20,6 +20,9 @@ public class Letter_viewmodel extends AndroidViewModel {
     public MutableLiveData<ArrayList<Character>> letterArray;
     public String randomWord = "TESTER";
     InputStream is;
+    int randomLetter = 26; // choose a number that corresponds with  letter of the alphabet
+    int numberToAdd = 97; // number to add to get lowercase a in ASCII table
+    int minWordLength = 2; // there are no valid words with less then 2 characters
 
     public Letter_viewmodel(@NonNull Application application) {
         super(application);
@@ -35,7 +38,7 @@ public class Letter_viewmodel extends AndroidViewModel {
 
     public char pickALetter() {
         Random random = new Random();
-        int ascii = random.nextInt(26) + 97;; // lowercase 'a'
+        int ascii = random.nextInt(randomLetter) + numberToAdd;; // lowercase 'a'
         return (char)ascii;
     }
 
@@ -90,9 +93,9 @@ public class Letter_viewmodel extends AndroidViewModel {
 
     public boolean checkText(String userText, boolean res) {
         try {
-            if (userText.length() < 2) {
+            if (userText.length() < minWordLength) {
                 new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(getApplication().getApplicationContext(), getApplication().getApplicationContext().getResources().getString(R.string.invalid), Toast.LENGTH_SHORT).show());
-                Log.i("TAG", "TOOO SHORT");
+                //Log.i("TAG", "TOOO SHORT");
                 res = false;
             }
             else{
@@ -105,8 +108,8 @@ public class Letter_viewmodel extends AndroidViewModel {
                 }
                 assert tempList != null;
                 wordList.retainAll(tempList);
-                Log.d("TAG", "WORDLIST: " + wordList);
-                Log.d("TAG", "WORDLIST_SIZE " + wordList.size());
+                //Log.d("TAG", "WORDLIST: " + wordList);
+                //Log.d("TAG", "WORDLIST_SIZE " + wordList.size());
 
                 int fileToOpen = getApplication().getResources().getIdentifier("raw/filter" + String.valueOf(userText.length()), null, getApplication().getApplicationContext().getPackageName());
 

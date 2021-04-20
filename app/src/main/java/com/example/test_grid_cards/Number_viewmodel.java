@@ -4,10 +4,16 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
+
+import kotlin.jvm.Synchronized;
 
 public class Number_viewmodel extends ViewModel{
     public MutableLiveData<ArrayList<Integer>> numberArray;
+    Integer[] highNums = {10, 25, 50, 75, 100};
+    ArrayList highList = new ArrayList<Integer>(Arrays.asList(highNums));
 
     public MutableLiveData<ArrayList<Integer>> getNumbers(){
         if (numberArray == null){
@@ -33,29 +39,8 @@ public class Number_viewmodel extends ViewModel{
         assert list != null;
         if (list.size() < 6) {
             Random highr = new Random();
-            int high = highr.nextInt(5);
-            switch (high) {
-                case 0:
-                    high = 10;
-                    break;
-
-                case 1:
-                    high = 25;
-                    break;
-
-                case 2:
-                    high = 50;
-                    break;
-
-                case 3:
-                    high = 75;
-                    break;
-
-                case 4:
-                    high = 100;
-                    break;
-            }
-            list.add(high);
+            int high = highr.nextInt(highList.size() - 1);
+            list.add((Integer) highList.get(high));
             numberArray.setValue(list);
         }
     }

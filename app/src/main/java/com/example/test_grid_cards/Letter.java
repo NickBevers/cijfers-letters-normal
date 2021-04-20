@@ -3,7 +3,6 @@ package com.example.test_grid_cards;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -20,10 +19,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.InputStream;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -42,7 +37,7 @@ public class Letter extends Fragment {
     MutableLiveData<Integer> ronde;
     EditText editText1;
     EditText editText2;
-    Letter_viewmodel letter_viewmodel;
+    Letter_viewmodel letterViewModel;
 
     public Letter() {
         // Required empty public constructor
@@ -54,8 +49,8 @@ public class Letter extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.letter, container, false);
         gameViewModel = new ViewModelProvider(requireActivity()).get(Gamestate_viewmodel.class);
-        letter_viewmodel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication())).get(Letter_viewmodel.class);
-        //letter_viewmodel = new ViewModelProvider(requireActivity()).get(Letter_viewmodel.class);
+        letterViewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication())).get(Letter_viewmodel.class);
+        //letterViewModel = new ViewModelProvider(requireActivity()).get(Letter_viewmodel.class);
         number.setValue(0);
         editText1 = v.findViewById(R.id.et_player1);
         editText2 = v.findViewById(R.id.et_player2);
@@ -74,16 +69,16 @@ public class Letter extends Fragment {
 
 
         v.findViewById(R.id.btn_vowel).setOnClickListener(view -> {
-            letter_viewmodel.pickVowel();
+            letterViewModel.pickVowel();
         });
 
         v.findViewById(R.id.btn_consonant).setOnClickListener(view -> {
-            letter_viewmodel.pickConsonant();
+            letterViewModel.pickConsonant();
         });
 
 
 
-        letter_viewmodel.getLetters().observe(getViewLifecycleOwner(), letterArray -> {
+        letterViewModel.getLetters().observe(getViewLifecycleOwner(), letterArray -> {
             if (letterArray.size() > 0 && letterArray.size() <= 6){
                 View cardView = getLayoutInflater().inflate(R.layout.cardlayout, cardGridLayout, false);
                 TextView tv = cardView.findViewById(R.id.number_card_text);
@@ -107,7 +102,7 @@ public class Letter extends Fragment {
             @Override
             public void run() {
                 int game = gameViewModel.gameType;
-                if (System.currentTimeMillis() - startTime <= 15000) {
+                if (System.currentTimeMillis() - startTime <= gameViewModel.timerDuration) {
                     number.postValue(number.getValue() + 1);
                 } else {
                     //editText1.setFocusable(false);
@@ -115,8 +110,8 @@ public class Letter extends Fragment {
                     String text1 = String.valueOf(editText1.getText());
                     String text2 = String.valueOf(editText2.getText());
 
-                    boolean resultPlayer1 = letter_viewmodel.checkText(text1, result1);
-                    boolean resultPlayer2 = letter_viewmodel.checkText(text2, result2);
+                    boolean resultPlayer1 = letterViewModel.checkText(text1, result1);
+                    boolean resultPlayer2 = letterViewModel.checkText(text2, result2);
 
                     if (game != gameViewModel.numberOfGames){
                         if (resultPlayer1 && resultPlayer2){
@@ -177,7 +172,6 @@ public class Letter extends Fragment {
 
     @Override
     public void onDestroyView() {
-        Letter_viewmodel letterViewModel = new ViewModelProvider(requireActivity()).get(Letter_viewmodel.class);
         super.onDestroyView();
         letterViewModel.clearLetter();
     }
