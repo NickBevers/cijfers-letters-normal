@@ -12,6 +12,8 @@ public class Gamestate_viewmodel extends ViewModel{
     public int numberOfGames = 3; //Amount of games to be played +1
     public int player1Difference;
     public int player2Difference;
+    public int player1Wins = 0;
+    public int player2Wins = 1;
 
     public MutableLiveData<Integer> getRound() {
         if (round == null) {
@@ -22,37 +24,20 @@ public class Gamestate_viewmodel extends ViewModel{
     }
 
     public int compareNum(int num1, int num2, int target){
-        int res = 0;
-        if (num1 > target){
-            player1Difference = num1 - target;
-        }
-        else{
-            player1Difference = target - num1;
-        }
+        player1Difference = Math.abs(num1- target);
+        player2Difference = Math.abs(num2- target);
 
-        if (num2 > target){
-            player2Difference = num2 - target;
-        }
-        else{
-            player2Difference = target - num2;
-        }
-
-        if (player1Difference < player2Difference){
+        if (player1Difference <= player2Difference){
             scorePlayer1++;
-            res = 0;
+            return player1Wins;
         }
 
-        else if (player1Difference > player2Difference){
+        if (player1Difference >= player2Difference){
             scorePlayer2++;
-            res = 1;
+            return player2Wins;
         }
 
-        else{
-            draw();
-            res = 2;
-        }
-
-        return res;
+        return 2;
     }
 
     public void winPlayer1(){
@@ -60,11 +45,6 @@ public class Gamestate_viewmodel extends ViewModel{
     }
 
     public void winPlayer2(){
-        scorePlayer2++;
-    }
-
-    public void draw(){
-        scorePlayer1++;
         scorePlayer2++;
     }
 
