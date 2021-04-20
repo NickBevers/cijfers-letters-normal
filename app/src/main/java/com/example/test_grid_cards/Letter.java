@@ -43,7 +43,7 @@ public class Letter extends Fragment {
 
     public Letter() {
         // Required empty public constructor
-        super(R.layout.number);
+        super(R.layout.letter);
     }
 
     @Nullable

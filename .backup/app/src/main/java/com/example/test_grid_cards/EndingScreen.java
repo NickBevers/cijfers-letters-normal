@@ -37,11 +37,11 @@ public class EndingScreen extends Fragment {
         score = v.findViewById(R.id.tv_score);
 
         if (gameViewModel.scorePlayer1 > gameViewModel.scorePlayer2){
-            player.setText("PLAYER 1");
+            player.setText(getResources().getString(R.string.player1_name));
             score.setText(String.format(Locale.ENGLISH,"Score: %d", gameViewModel.scorePlayer1));
         }
         else{
-            player.setText("PLAYER 2");
+            player.setText(getResources().getString(R.string.player2_name));
             score.setText(String.format(Locale.ENGLISH,"Score: %d", gameViewModel.scorePlayer2));
         }
         return v;

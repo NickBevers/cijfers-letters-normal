@@ -6699,7 +6699,7 @@ urva
 usar
 used
 usee
-user
+score
 uses
 ussr
 usun

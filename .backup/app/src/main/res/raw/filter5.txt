@@ -14981,7 +14981,7 @@ usage
 usant
 usara
 usent
-users
+scores
 ushak
 ushas
 usher
