@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 public class MainActivity extends AppCompatActivity {
+    // set the variables for the mainactivity
     Gamestate_viewmodel viewModel;
     private final Letter letter_frag = new Letter();
     private final Number number_frag = new Number();
@@ -30,10 +31,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // set the correct layout for mainactivity and set the viewmodel to the gamestate_viewmodel class
         setContentView(R.layout.activity_main);
         viewModel = new ViewModelProvider(this).get(Gamestate_viewmodel.class);
 
+        // observe the getround functino to see which round we are playing
         viewModel.getRound().observe(this, round -> {
+            // if we're not in the last round, set the fragments according to the game played
             if (viewModel.gameType < viewModel.numberOfGames){
                 if(round.equals(0)){
                     getSupportFragmentManager().beginTransaction()
@@ -52,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
+            // if we're in the last round, set the screen to the ending screen after the last game in the last round
             else{
                 if(round.equals(0)){
                     getSupportFragmentManager().beginTransaction()
@@ -75,12 +80,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
     }
 
     public void setRound(int num){

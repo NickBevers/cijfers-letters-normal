@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 public class Gamestate_viewmodel extends ViewModel{
+    // initiate all variables needed for the game
     private MutableLiveData<Integer> round;
     public Integer roundNum = 0;
     public Integer gameType = 0;
@@ -17,6 +18,7 @@ public class Gamestate_viewmodel extends ViewModel{
     public int player2Wins = 1;
 
     public MutableLiveData<Integer> getRound() {
+        // get the current round
         if (round == null) {
             round = new MutableLiveData<Integer> ();
             round.postValue(roundNum);
@@ -25,6 +27,7 @@ public class Gamestate_viewmodel extends ViewModel{
     }
 
     public int calculateDifference(int num1, int num2, int target){
+        // check which player is closest to the desired number to get the winner
         player1Difference = Math.abs(num1- target);
         player2Difference = Math.abs(num2- target);
 
@@ -41,6 +44,7 @@ public class Gamestate_viewmodel extends ViewModel{
         return 2;
     }
 
+    // ↓ up the score of the correct player (the one that won)
     public void winPlayer1(){
         scorePlayer1++;
     }
@@ -49,6 +53,7 @@ public class Gamestate_viewmodel extends ViewModel{
         scorePlayer2++;
     }
 
+    // ↓ change the round or game depending on the number that's given as parameter
     public void setRound(int num){
         round.postValue(num);
     }

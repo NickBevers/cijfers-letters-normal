@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".Number">
 
+    <!-- Score of player 1 -->
     <TextView
         android:id="@+id/score_player1"
         android:layout_width="0dp"
@@ -21,6 +22,7 @@
         app:layout_constraintWidth_percent="0.5"
          />
 
+    <!-- Score of player 2 -->
     <TextView
         android:id="@+id/score_player2"
         android:layout_width="0dp"
@@ -35,6 +37,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent="0.5" />
 
+    <!-- Name of player 1 -->
     <TextView
         android:id="@+id/tv_player1"
         android:layout_width="0dp"
@@ -48,6 +51,7 @@
         app:layout_constraintTop_toBottomOf="@+id/score_player1"
         app:layout_constraintWidth_percent="0.5" />
 
+    <!-- Name of player 2 -->
     <TextView
         android:id="@+id/tv_player2"
         android:layout_width="0dp"
@@ -61,6 +65,7 @@
         app:layout_constraintTop_toBottomOf="@+id/score_player2"
         app:layout_constraintWidth_percent="0.5" />
 
+    <!-- Inputfield of player 1 -->
     <EditText
         android:id="@+id/et_player1"
         android:layout_width="0dp"
@@ -73,6 +78,7 @@
         android:autofillHints=" "
         tools:ignore="LabelFor" />
 
+    <!-- Inputfield of player 2 -->
     <EditText
         android:id="@+id/et_player2"
         android:layout_width="0dp"
@@ -85,6 +91,7 @@
         android:inputType="number"
         tools:ignore="LabelFor" />
 
+    <!-- Button CHECK for finding the winner -->
     <Button
         android:id="@+id/check_button"
         android:layout_width="wrap_content"
@@ -96,6 +103,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_player1" />
 
+    <!-- Textview for the cards -->
     <TextView
         android:id="@+id/tv_random"
         android:layout_width="match_parent"
@@ -106,6 +114,7 @@
         app:layout_constraintBottom_toTopOf="@+id/gridlayout"
         app:layout_constraintTop_toBottomOf="@+id/check_button" />
 
+    <!-- Gridlayout for the cards -->
     <GridLayout
         android:id="@+id/gridlayout"
         android:layout_width="match_parent"
@@ -118,6 +127,7 @@
         app:layout_constraintBottom_toTopOf="@+id/btn_low_number"
         tools:layout_editor_absoluteX="1dp" />
 
+    <!-- Button HIGH for picking a high number -->
     <Button
         android:id="@+id/btn_high_number"
         android:layout_width="wrap_content"
@@ -129,6 +139,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btn_low_number" />
 
+    <!-- Button LOW for picking a low number -->
     <Button
         android:id="@+id/btn_low_number"
         android:layout_width="wrap_content"

@@ -19,7 +19,7 @@ public class Splashscreen extends AppCompatActivity {
 
             @Override
             public void run() {
-
+                // set a timer to switch the splashscreen to the mainactivity after a period (1 second)
                 Intent i = new Intent(Splashscreen.this, MainActivity.class);
                 startActivity(i);
 

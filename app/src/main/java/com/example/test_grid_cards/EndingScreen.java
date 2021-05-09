@@ -30,6 +30,7 @@ public class EndingScreen extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        // ↓ set the view, the UI elements and set the name of the winner
         v = inflater.inflate(R.layout.activity_ending_screen, container, false);
         gameViewModel = new ViewModelProvider(requireActivity()).get(Gamestate_viewmodel.class);
 

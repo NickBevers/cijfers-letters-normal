@@ -17,6 +17,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class Letter_viewmodel extends AndroidViewModel {
+    // ↓ set all variables needed
     public MutableLiveData<ArrayList<Character>> letterArray;
     public String randomWord = "TESTER";
     InputStream is;
@@ -28,6 +29,7 @@ public class Letter_viewmodel extends AndroidViewModel {
         super(application);
     }
 
+    // check if the letterarray contains any characters, and return it
     public MutableLiveData<ArrayList<Character>> getLetters(){
         if (letterArray == null){
             letterArray = new MutableLiveData<ArrayList<Character>>();
@@ -36,12 +38,14 @@ public class Letter_viewmodel extends AndroidViewModel {
         return letterArray;
     }
 
+    // pick a random letter from an ascii table
     public char pickALetter() {
         Random random = new Random();
         int ascii = random.nextInt(randomLetter) + numberToAdd;; // lowercase 'a'
         return (char)ascii;
     }
 
+    // see if the letter it picked is a vowel
     public boolean isVowel (char c) {
         char[] vowels = {'a', 'e', 'i', 'o', 'u'};
 
@@ -51,11 +55,13 @@ public class Letter_viewmodel extends AndroidViewModel {
         return false;
     }
 
+    // see if the letter it picked is a consonant
     public boolean isConsonant (char c) {
         return !isVowel(c);
     }
 
 
+    // function for picking a vowel to add to letterarray
     public void pickVowel() {
         ArrayList<Character> list = getLetters().getValue();
         assert list != null;
@@ -70,6 +76,7 @@ public class Letter_viewmodel extends AndroidViewModel {
         }
     }
 
+    // function for picking a consonant to add to letterarray
     public void pickConsonant() {
         ArrayList<Character> list = getLetters().getValue();
         assert list != null;
@@ -84,6 +91,7 @@ public class Letter_viewmodel extends AndroidViewModel {
         }
     }
 
+    // empty the letterarray
     public void clearLetter(){
         ArrayList<Character> list = getLetters().getValue();
         assert list != null;
@@ -91,14 +99,17 @@ public class Letter_viewmodel extends AndroidViewModel {
         letterArray.setValue(list);
     }
 
+    //check the given string to make sure it exists, and can be formed with the characters from the letterarray
     public boolean checkText(String userText, boolean res) {
         try {
+            // a word must contani at least 2 letters, if not it isn't a word
             if (userText.length() < minWordLength) {
                 new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(getApplication().getApplicationContext(), getApplication().getApplicationContext().getResources().getString(R.string.invalid), Toast.LENGTH_SHORT).show());
                 //Log.i("TAG", "TOOO SHORT");
                 res = false;
             }
             else{
+                //use wordlist to see how many letters from the letterarray are in the given string
                 char [] wordArray = userText.toCharArray();
                 ArrayList<Character> tempList = letterArray.getValue();
 
@@ -108,24 +119,21 @@ public class Letter_viewmodel extends AndroidViewModel {
                 }
                 assert tempList != null;
                 wordList.retainAll(tempList);
-                //Log.d("TAG", "WORDLIST: " + wordList);
-                //Log.d("TAG", "WORDLIST_SIZE " + wordList.size());
 
+                //use the correct file to check the string for realness (depending on how long it is)
                 int fileToOpen = getApplication().getResources().getIdentifier("raw/filter" + String.valueOf(userText.length()), null, getApplication().getApplicationContext().getPackageName());
 
                 is = this.getApplication().getApplicationContext().getResources().openRawResource(fileToOpen);
+                // if the string contains letters not from the letterarray, it isn't valid
                 if (wordList.size() < userText.length()){
-                    //Log.i("TAG", "WROOOOOONG 2. YOUR WORD IS INVALID");
                     new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(getApplication().getApplicationContext(), getApplication().getApplicationContext().getResources().getString(R.string.invalid), Toast.LENGTH_SHORT).show());
                     res = false;
                 }
 
+                // check the file with words for the string to see if it exists
                 byte[] buffer = new byte[is.available()];
                 while (is.read(buffer) != -1){
                     String jsontext = new String(buffer);
-                    //Log.d("TAG", "SimpleText: " + userText.length());
-                    //Log.i("TAG", "ANTWOORD:  JAAAAAAAA");
-                    //Log.d("TAG", "ANTWOORD: NEEEEEEEEEEEE");
                     res = jsontext.contains(userText);
                 }
             }

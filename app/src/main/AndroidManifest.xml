@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Test_grid_cards">
+        <!-- Set splashscreen as launcher intent so that it appears at startup -->
         <activity android:name=".Splashscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -16,6 +17,7 @@
             </intent-filter>
         </activity>
 
+        <!-- Change category to default instead of launcher so that splashscreen can be shown -->
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
