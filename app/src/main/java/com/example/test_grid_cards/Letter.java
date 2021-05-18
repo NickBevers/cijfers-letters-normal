@@ -41,6 +41,7 @@ public class Letter extends Fragment {
     EditText editText1;
     EditText editText2;
     Letter_viewmodel letterViewModel;
+    
 
     public Letter() {
         // Required empty public constructor
@@ -84,14 +85,14 @@ public class Letter extends Fragment {
         // ↓ check if the letterArray (cards in cardview) contains 6 letters
         // if not so, draw a new card, if so, start a timer
         letterViewModel.getLetters().observe(getViewLifecycleOwner(), letterArray -> {
-            if (letterArray.size() > 0 && letterArray.size() <= 6){
+            if (letterArray.size() > 0 && letterArray.size() <= gameViewModel.maxLetters){
                 View cardView = getLayoutInflater().inflate(R.layout.cardlayout, cardGridLayout, false);
                 TextView tv = cardView.findViewById(R.id.number_card_text);
                 tv.setText(String.valueOf(letterArray.get(letterArray.size()-1)));
                 cardGridLayout.addView(cardView);
             }
 
-            if (letterArray.size() == 6){
+            if (letterArray.size() == gameViewModel.maxLetters){
                 startTimer(requireView());
             }
         });
