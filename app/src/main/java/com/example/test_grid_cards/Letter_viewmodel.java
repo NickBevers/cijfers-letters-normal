@@ -24,6 +24,7 @@ public class Letter_viewmodel extends AndroidViewModel {
     int randomLetter = 26; // choose a number that corresponds with  letter of the alphabet
     int numberToAdd = 97; // number to add to get lowercase a in ASCII table
     int minWordLength = 2; // there are no valid words with less then 2 characters
+    int maxLetters = 9;
 
     public Letter_viewmodel(@NonNull Application application) {
         super(application);
@@ -65,7 +66,7 @@ public class Letter_viewmodel extends AndroidViewModel {
     public void pickVowel() {
         ArrayList<Character> list = getLetters().getValue();
         assert list != null;
-        if (list.size() < 6){
+        if (list.size() < maxLetters){
             char c;
             do {
                 c = pickALetter();
@@ -80,7 +81,7 @@ public class Letter_viewmodel extends AndroidViewModel {
     public void pickConsonant() {
         ArrayList<Character> list = getLetters().getValue();
         assert list != null;
-        if (list.size() < 6){
+        if (list.size() < maxLetters){
             char c;
             do {
                 c = pickALetter();
